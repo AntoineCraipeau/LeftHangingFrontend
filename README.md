@@ -1,2 +1,2 @@
-# LeftHanging
-Hangman-type web game application.
+# LeftHangingFrontend
+Hangman-type web game application - VueJs Frontend
