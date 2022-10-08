@@ -53,8 +53,7 @@ export default {
   },
   methods:{
     startGame(type){
-      console.log(type);
-      this.$router.push('/game');
+      this.$router.push('/game/'+type);
     }
   }
 }

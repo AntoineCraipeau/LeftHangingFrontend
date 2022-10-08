@@ -32,8 +32,10 @@ export default {
         for(let i= 0;i<this.word.length;i++){
             this.discovered[i] = "#"
         }
-        fetch('/api/users',{method: 'GET',})
-        .then((response)=>{console.log(response.json())})
+        console.log(this.$route.params.theme)
+        fetch('/api/words/'+this.$route.params.theme)
+        .then((response)=>{return(response.json())})
+        .then((parsed)=>{console.log(parsed)})
     },
     beforeUnmount(){
         alert("You will lose your progression if you leave the game");
