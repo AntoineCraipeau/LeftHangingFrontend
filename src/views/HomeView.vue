@@ -12,21 +12,21 @@
           <img src="../assets/menu/plantes-innovation-getty.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('plants')" class="btn btn-primary btn-lg"><h5>Plants</h5></button>
-            <p>Some representative placeholder content for the first slide.</p>
+            <ScoreBoard theme="plants" />
           </div>
         </div>
         <div class="carousel-item">
           <img src="../assets/menu/coccinelle2-jpg-1400x950.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('insects')" class="btn btn-primary btn-lg"><h5>Insects</h5></button>
-            <p>Some representative placeholder content for the second slide.</p>
+            <ScoreBoard theme="insects" />
           </div>
         </div>
         <div class="carousel-item">
           <img src="../assets/menu/2c1074k-e1638197792976.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('animals')" class="btn btn-primary btn-lg"><h5>Animals</h5></button>
-            <p>Some representative placeholder content for the third slide.</p>
+            <ScoreBoard theme="animals" />
           </div>
         </div>
       </div>
@@ -45,12 +45,14 @@
 <script>
 // @ is an alias to /src
 import SiteHeader from '@/components/SiteHeader.vue';
+import ScoreBoard from '@/components/ScoreBoard.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    SiteHeader
-  },
+    SiteHeader,
+    ScoreBoard
+},
   methods:{
     startGame(type){
       this.$router.push('/game/'+type);
