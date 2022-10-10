@@ -5,6 +5,7 @@
     <section>
         <button @click="fullDisplay = !fullDisplay">Close</button>
         <h1>Scoreboard : {{theme}}</h1>
+        <p v-for="score in scoreList" :key="score.id">{{score.owner+':'+score.score}}</p>
     </section>
   </div>
 </template>
@@ -29,7 +30,7 @@ export default {
 
         fetch('/api/pscore/'+this.theme)
         .then((response)=>{return(response.json())})
-        .then((parsed) => {this.personnalBest = parsed})
+        .then((parsed) => {this.personnalBest = parsed.score})
     }
 }
 </script>

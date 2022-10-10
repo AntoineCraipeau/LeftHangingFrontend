@@ -52,7 +52,7 @@ export default {
   components: {
     SiteHeader,
     ScoreBoard
-},
+  },
   methods:{
     startGame(type){
       this.$router.push('/game/'+type);
