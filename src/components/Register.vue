@@ -41,7 +41,7 @@
         handleRegister(){
             if(this.password === this.repassword){
                 let obj = {email:this.email,password:this.password,username:this.username}
-                fetch( '/api/register', {
+                fetch( 'http://3.135.95.15:3001/register', {
                     method: 'POST',
                     mode: 'cors', // no-cors, *cors, same-origin
                     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

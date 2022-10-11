@@ -30,7 +30,7 @@
     methods:{
         handleLogin(){
             let obj = {email:this.email,password:this.password}
-            fetch( '/api/login', {
+            fetch( 'http://3.135.95.15:3001/login', {
                 method: 'POST',
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

@@ -24,11 +24,11 @@ export default {
         }
     },
     beforeMount(){
-        fetch('/api/score/'+this.theme)
+        fetch('http://3.135.95.15:3001/score/'+this.theme)
         .then((response)=>{return(response.json())})
         .then((parsed) => {this.scoreList = parsed})
 
-        fetch('/api/pscore/'+this.theme)
+        fetch('http://3.135.95.15:3001/pscore/'+this.theme)
         .then((response)=>{return(response.json())})
         .then((parsed) => {this.personnalBest = parsed.score})
     }

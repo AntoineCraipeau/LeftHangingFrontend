@@ -128,7 +128,7 @@ export default {
         loadWord(){
             this.ready = false;
             this.badletters = [];
-            fetch('/api/words/'+this.$route.params.theme)
+            fetch('http://3.135.95.15:3001/words/'+this.$route.params.theme)
             .then((response)=>{return(response.json())})
             .then((parsed) => {
                 this.word = parsed.response;
