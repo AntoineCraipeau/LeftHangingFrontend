@@ -140,7 +140,7 @@ export default {
             this.ready = true;
         },postScore(){
             this.ready = false;
-            fetch( '/api/score/'+this.$route.params.theme, {
+            fetch( 'http://3.135.95.15:3001/score/'+this.$route.params.theme, {
                 method: 'POST',
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
