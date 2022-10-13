@@ -24,13 +24,14 @@
     data(){
         return{
             email: "",
-            password: ""
+            password: "",
+            token: 0
         }
     },
     methods:{
         handleLogin(){
-            let obj = {email:this.email,password:this.password}
-            fetch( 'http://3.135.95.15:3001/login', {
+            let obj = {Email:this.email,Password:this.password}
+            fetch( 'http://localhost:3001/auth/login', {
                 method: 'POST',
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -39,7 +40,21 @@
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(obj)
+            }).then((res) => {this.token = res.token}).then(console.log(this.token)).then(
+                fetch('http://localhost:3001/auth/verifyLogin', {
+                method: 'POST',
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+
+                headers: {
+                'Content-Type': 'application/json',
+                'authorization': this.token
+                },
+
+                body: JSON.stringify("yes")
             })
+            ).then((res)=>{console.log(res)});
             //To be edited later when auth is working
             this.$parent.isConnected = true
             this.$parent.logging = false
