@@ -58,6 +58,8 @@ export default {
             score: 0,
             letter:"",
             word:"",
+            picture:"",
+            theme:"",
             discovered:[],
             badletters:[]
         }
@@ -128,10 +130,12 @@ export default {
         loadWord(){
             this.ready = false;
             this.badletters = [];
-            fetch('http://3.135.95.15:3001/words/'+this.$route.params.theme)
+            fetch('/api/words/'+this.$route.params.theme)
             .then((response)=>{return(response.json())})
             .then((parsed) => {
-                this.word = parsed.response;
+                this.word = parsed.Name;
+                this.picture = parsed.Picture;
+                this.theme = parsed.Theme;
                 for(let i= 0;i<this.word.length;i++){
                     this.discovered[i] = "#";
                     this.ready = true;
@@ -140,14 +144,11 @@ export default {
             this.ready = true;
         },postScore(){
             this.ready = false;
-            fetch( 'http://3.135.95.15:3001/score/'+this.$route.params.theme, {
+            fetch( '/api/score/'+this.theme, {
                 method: 'POST',
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
                 headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'authorization': sessionStorage.getItem("token")
                 },
                 body: JSON.stringify({score:this.score})
             })

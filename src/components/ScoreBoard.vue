@@ -5,7 +5,7 @@
     <section>
         <button @click="fullDisplay = !fullDisplay">Close</button>
         <h1>Scoreboard : {{theme}}</h1>
-        <p v-for="score in scoreList" :key="score.id">{{score.owner+':'+score.score}}</p>
+        <p v-for="score in scoreList" :key="score.Moment">{{score.Username+':'+score.Score+':'+score.Moment}}</p>
     </section>
   </div>
 </template>
@@ -24,13 +24,18 @@ export default {
         }
     },
     beforeMount(){
-        fetch('http://3.135.95.15:3001/score/'+this.theme)
+        fetch('/api/score/'+this.theme)
         .then((response)=>{return(response.json())})
         .then((parsed) => {this.scoreList = parsed})
 
-        fetch('http://3.135.95.15:3001/pscore/'+this.theme)
+        fetch('/api/users/score/'+this.theme,{
+                headers: {
+                'Content-Type': 'application/json',
+                'authorization': sessionStorage.getItem("token")
+                }
+        })
         .then((response)=>{return(response.json())})
-        .then((parsed) => {this.personnalBest = parsed.score})
+        .then((parsed) => {this.personnalBest = parsed.Score})
     }
 }
 </script>
