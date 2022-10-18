@@ -6,6 +6,10 @@
         </div>
 
         <div v-if="ready" id="gameScreen">
+            <section id="gameBar">
+                <p class="display-6">SCORE: {{score}}</p>
+                <button type="button" class="btn btn-danger" @click="handleQuit">QUIT</button>
+            </section>
             <section id="gaugeWrapper">
                 <div id="gauge">
                     <ErrorCase v-for="(letter,index) in badletters" :letter="letter" :key="index"/>
@@ -20,21 +24,16 @@
                     <input v-model="letter" maxlength="1" type="text" placeholder="" id="letterPrompt" ref="letterPrompt" autofocus/>
                 </div>
                 <div>
-                    <button @click="handleSubmitLetter()">SUBMIT</button>
+                    <button type="button" class="btn btn-primary" @click="handleSubmitLetter()">SUBMIT</button>
                 </div>
             </section>
-            <section>
-                <p>Score: {{score}}</p>
-            </section>
         </div>
-
-        <div v-if="winState">
-            <SuccessPopup :score="score" :word="word"/>
-        </div>
-
-        <div v-if="loseState">
-            <FailPopup :score="score" :word="word"/>
-        </div>
+        <Transition>
+            <SuccessPopup v-if="winState" :score="score" :word="word" :pic="picture"/>
+        </Transition>
+        <Transition>
+            <FailPopup  v-if="loseState" :score="score" :word="word" :pic="picture"/>
+        </Transition>
 
     </div>
 </template>
@@ -122,6 +121,7 @@ export default {
         },
         handleRetry(){
             this.loseState = false;
+            this.letter="";
             this.loadWord();
         },
         handleQuit(){
@@ -136,9 +136,13 @@ export default {
                 this.word = parsed.Name;
                 this.picture = parsed.Picture;
                 this.theme = parsed.Theme;
+                this.discovered = []
                 for(let i= 0;i<this.word.length;i++){
-                    this.discovered[i] = "#";
-                    this.ready = true;
+                    if(this.word[i]===" " || this.word[i]==="-"){
+                        this.discovered[i] = this.word[i];
+                    }else{
+                        this.discovered[i] = "#";
+                    }
                 }
             })
             this.ready = true;
@@ -207,5 +211,21 @@ export default {
         height: 12vh;
         font-size: 10vh;
     }
+}
+#gameBar{
+    font-size: 10vh;
+    padding: 1vh;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease-in;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

@@ -31,15 +31,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="mb-3">
+            <div v-if="!isConnected">
+                <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email address</label>
                 <input v-model="lg_email" type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Password</label>
+                    <input v-model="lg_password" type="email" class="form-control" id="loginPassword" placeholder="your password">
+                </div>
+                <button type="submit" class="btn btn-primary" @click="handleLogin">Login</button>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input v-model="lg_password" type="email" class="form-control" id="loginPassword" placeholder="your password">
+            <div v-if="isConnected">
+                <p>You are now connected.</p>
             </div>
-            <button type="submit" class="btn btn-primary" @click="handleLogin">Login</button>
+            
         </div>
     </div>
 
@@ -75,6 +81,7 @@
 </template>
 
 <script>
+
 export default {
     name: "SiteHeader",
     data() {
@@ -90,7 +97,8 @@ export default {
         };
     },
     mounted(){
-        fetch('http://localhost:3001/users/myInfo', {
+        if(sessionStorage.getItem("token")){
+            fetch('http://localhost:3001/users/myInfo', {
                 headers: {
                 'Content-Type': 'application/json',
                 'authorization': sessionStorage.getItem("token")
@@ -98,9 +106,11 @@ export default {
             })
             .then((response)=>{return(response.json())})
             .then((parsed) => {this.isConnected = true; this.userName = parsed.Username})
+        }
     },
     updated(){
-        fetch('http://localhost:3001/users/myInfo', {
+        if(sessionStorage.getItem("token")){
+            fetch('http://localhost:3001/users/myInfo', {
                 headers: {
                 'Content-Type': 'application/json',
                 'authorization': sessionStorage.getItem("token")
@@ -108,6 +118,7 @@ export default {
             })
             .then((response)=>{return(response.json())})
             .then((parsed) => {this.isConnected = true; this.userName = parsed.Username})
+        }
     },
     methods:{
         handleLogin(){
@@ -135,13 +146,12 @@ export default {
                 let obj = {Email:this.rg_email,Password:this.rg_password,Username:this.rg_username}
                 fetch( '/api/auth/register', {
                     method: 'POST',
-                    mode: 'cors', // no-cors, *cors, same-origin
-                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: 'same-origin', // include, *same-origin, omit
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        },
+                    },
                     body: JSON.stringify(obj)
                     })
             }else{
