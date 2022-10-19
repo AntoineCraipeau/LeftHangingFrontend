@@ -7,7 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <p v-for="score in scoreList" :key="score.Moment">{{score.Username+':'+score.Score+':'+score.Moment}}</p>
+            <p v-for="score in scoreList" :key="score.Moment">{{score.Username+' : '+score.Score+' : '+score.Moment.slice(0,10)}}</p>
         </div>
     </div>
 </template>
