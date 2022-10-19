@@ -117,7 +117,9 @@ export default {
         },
         handleLose(){
             this.loseState = true;
-            this.postScore();
+            if(sessionStorage.getItem("token")){
+                this.postScore();
+            }
         },
         handleRetry(){
             this.loseState = false;

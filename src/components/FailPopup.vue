@@ -62,4 +62,8 @@ export default {
         margin-right: auto;
     }
 
+    .display-6{
+      font-size: larger;
+    }
+
 </style>
