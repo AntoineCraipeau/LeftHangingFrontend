@@ -106,7 +106,7 @@ export default {
     },
     mounted(){
         if(sessionStorage.getItem("token")){
-            fetch('http://localhost:3001/users/myInfo', {
+            fetch('http://3.135.95.15:3001/users/myInfo', {
                 headers: {
                 'Content-Type': 'application/json',
                 'authorization': sessionStorage.getItem("token")
@@ -118,7 +118,7 @@ export default {
     },
     updated(){
         if(sessionStorage.getItem("token")){
-            fetch('http://localhost:3001/users/myInfo', {
+            fetch('http://3.135.95.15:3001/users/myInfo', {
                 headers: {
                 'Content-Type': 'application/json',
                 'authorization': sessionStorage.getItem("token")
@@ -132,14 +132,14 @@ export default {
         handleLogin(){
 
             let obj = {Email:this.lg_email,Password:this.lg_password}
-            fetch( 'http://localhost:3001/auth/login', {
+            fetch( 'http://3.135.95.15:3001/auth/login', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(obj)
             }).then((res) => {return(res.json())}).then((json) => {sessionStorage.setItem("token",json.token)}).then(()=>{
-                fetch('http://localhost:3001/users/myInfo', {
+                fetch('http://3.135.95.15:3001/users/myInfo', {
                     headers: {
                     'Content-Type': 'application/json',
                     'authorization': sessionStorage.getItem("token")
@@ -157,7 +157,7 @@ export default {
         handleRegister(){
             if(this.rg_password === this.rg_repassword){
                 let obj = {Email:this.rg_email,Password:this.rg_password,Username:this.rg_username}
-                fetch( '/api/auth/register', {
+                fetch( 'http://3.135.95.15:3001/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -176,7 +176,7 @@ export default {
             }
         },
         handleDisconnexion(){
-            fetch('http://localhost:3001/auth/disconnect', {
+            fetch('http://3.135.95.15:3001/auth/disconnect', {
                 headers: {
                 'Content-Type': 'application/json',
                 'authorization': sessionStorage.getItem("token")
