@@ -19,7 +19,7 @@
         </button>
         <ul class="dropdown-menu">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasLogin">Login</button>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRegister" aria-controls="offcanvasRegister">Register</button>
+            <button @click="registering = true" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRegister" aria-controls="offcanvasRegister">Register</button>
         </ul>
     </div>
 
@@ -38,7 +38,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Password</label>
-                    <input v-model="lg_password" type="email" class="form-control" id="loginPassword" placeholder="your password">
+                    <input v-model="lg_password" type="password" class="form-control" id="loginPassword" placeholder="your password">
                 </div>
                 <button type="submit" class="btn btn-primary" @click="handleLogin">Login</button>
             </div>
@@ -56,23 +56,30 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="mb-3">
+            <div v-if="registering">
+                <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Username</label>
                 <input v-model="rg_username" type="email" class="form-control" id="registerUsername" placeholder="your username">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input v-model="rg_email" type="email" class="form-control" id="registerEmail" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Password</label>
+                    <input v-model="rg_password" type="password" class="form-control" id="registerPassword" placeholder="your password">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Confirm Password</label>
+                    <input v-model="rg_repassword" type="password" class="form-control" id="registerRePassword" placeholder="confirm password">
+                </div>
+                <button type="submit" class="btn btn-primary" @click="handleRegister">Register</button>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input v-model="rg_email" type="email" class="form-control" id="registerEmail" placeholder="name@example.com">
+            <div v-if="!registering">
+                <p>You have been sent to confirm your inscription.</p>
+                <p>You can now login.</p>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                <input v-model="rg_password" type="password" class="form-control" id="registerPassword" placeholder="your password">
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Confirm Password</label>
-                <input v-model="rg_repassword" type="password" class="form-control" id="registerRePassword" placeholder="confirm password">
-            </div>
-            <button type="submit" class="btn btn-primary" @click="handleRegister">Register</button>
+            
         </div>
     </div>
 
@@ -87,6 +94,7 @@ export default {
     data() {
         return {
             isConnected: false,
+            registering: false,
             userName: "proplayer",
             lg_email: "",
             lg_password: "",
@@ -138,7 +146,12 @@ export default {
                     }
                 })
                 .then((response)=>{return(response.json())})
-                .then((parsed) => {this.isConnected = true; this.userName = parsed.Username})
+                .then((parsed) => {
+                    this.lg_email = "";
+                    this.lg_password = "";
+                    this.userName = parsed.Username;
+                    this.isConnected = true;
+                })
                 })
         },
         handleRegister(){
@@ -146,14 +159,18 @@ export default {
                 let obj = {Email:this.rg_email,Password:this.rg_password,Username:this.rg_username}
                 fetch( '/api/auth/register', {
                     method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(obj)
-                    })
+                })
+                .then(()=>{
+                    this.rg_email = "";
+                    this.rg_username = "";
+                    this.rg_password = "";
+                    this.rg_repassword = "";
+                    this.registering = false;
+                })
             }else{
                 alert("The passwords don't match !")
             }
