@@ -12,21 +12,21 @@
           <img src="../assets/menu/plantes-innovation-getty.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('plants')" class="btn btn-primary btn-lg"><h5>Plants</h5></button>
-            <ScoreBoard theme="plants" />
+            <ScoreBoard :key="updateMethod" theme="plants" />
           </div>
         </div>
         <div class="carousel-item">
           <img src="../assets/menu/coccinelle2-jpg-1400x950.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('insects')" class="btn btn-primary btn-lg"><h5>Insects</h5></button>
-            <ScoreBoard theme="insects" />
+            <ScoreBoard :key="updateMethod" theme="insects" />
           </div>
         </div>
         <div class="carousel-item">
           <img src="../assets/menu/2c1074k-e1638197792976.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <button @click="startGame('animals')" class="btn btn-primary btn-lg"><h5>Animals</h5></button>
-            <ScoreBoard theme="animals" />
+            <ScoreBoard :key="updateMethod" theme="animals" />
           </div>
         </div>
       </div>
@@ -53,9 +53,18 @@ export default {
     SiteHeader,
     ScoreBoard
   },
+  data(){
+    return{
+      //The following variable is used to update the keys of the ScoreBoard Components to make them rerender when logging in.
+      updateMethod:1
+    }
+  },
   methods:{
     startGame(type){
       this.$router.push('/game/'+type);
+    },
+    updateScores(){
+      this.updateMethod++;
     }
   }
 }

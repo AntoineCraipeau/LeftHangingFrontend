@@ -151,6 +151,7 @@ export default {
                     this.lg_password = "";
                     this.userName = parsed.Username;
                     this.isConnected = true;
+                    this.$parent.updateScores();
                 })
                 })
         },
@@ -184,6 +185,7 @@ export default {
             }).then(() => {
                 sessionStorage.clear();
                 this.isConnected = false;
+                this.$parent.updateScores();
             })
         }
     }

@@ -159,6 +159,9 @@ export default {
                 body: JSON.stringify({score:this.score})
             })
             this.ready = true;
+        },
+        updateScores(){
+            //Here to avoid errors when displaying when connecting on the game view.
         }
     }
 }
