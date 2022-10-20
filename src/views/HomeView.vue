@@ -43,7 +43,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import SiteHeader from '@/components/SiteHeader.vue';
 import ScoreBoard from '@/components/ScoreBoard.vue';
 
