@@ -76,7 +76,7 @@
                 <button type="submit" class="btn btn-primary" @click="handleRegister">Register</button>
             </div>
             <div v-if="!registering">
-                <p>You have been sent to confirm your inscription.</p>
+                <p>You have been sent an email to confirm your inscription.</p>
                 <p>You can now login.</p>
             </div>
             
